@@ -2,16 +2,16 @@
 
 #include <catch2/catch_session.hpp>
 
-#include "pican/mem/mem.hpp"
-#include "heap/Heap.hpp"
-#include "stacktrace/Stacktrace.hpp"
+#include "bhlib/heap/Heap.hpp"
+#include "bhlib/mem/mem.hpp"
+#include "bhlib/stacktrace/Stacktrace.hpp"
 
 namespace {
 void
 initialize_memory_manager() {
     [[maybe_unused]]
-    const auto memoryBytes = pican::mem::Manager::DEFAULT_SIZE;
-    pican::mem::Manager::initialize(memoryBytes);
+    const auto memoryBytes = bhlib::mem::Manager::DEFAULT_SIZE;
+    bhlib::mem::Manager::initialize(memoryBytes);
 }
 }  // namespace
 

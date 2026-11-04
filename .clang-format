@@ -70,7 +70,7 @@ BreakInheritanceList: AfterComma
 BreakStringLiterals: true
 BreakTemplateDeclarations: Yes
 ColumnLimit: 120
-CommentPragmas:  '^ IWYU pragma:'
+CommentPragmas: '^ IWYU pragma:'
 CompactNamespaces: false
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
@@ -107,16 +107,16 @@ IndentWrappedFunctionNames: false
 InsertBraces: true
 InsertNewlineAtEOF: true
 IntegerLiteralSeparator:
-  Binary:          4
+  Binary: 4
   BinaryMinDigits: 4
-  Decimal:         3
+  Decimal: 3
   DecimalMinDigits: 3
-  Hex:             2
-  HexMinDigits:    2
+  Hex: 2
+  HexMinDigits: 2
 KeepEmptyLines:
-  AtEndOfFile:     false
-  AtStartOfBlock:  false
-  AtStartOfFile:   false
+  AtEndOfFile: false
+  AtStartOfBlock: false
+  AtStartOfFile: false
 LambdaBodyIndentation: Signature
 LineEnding: DeriveLF
 MacroBlockBegin: ''
@@ -151,7 +151,7 @@ QualifierOrder:
   - const
   - type
 RawStringFormats:
-  - Language:        Cpp
+  - Language: Cpp
     Delimiters:
       - cc
       - CC
@@ -161,8 +161,8 @@ RawStringFormats:
       - 'c++'
       - 'C++'
     CanonicalDelimiter: ''
-    BasedOnStyle:    google
-  - Language:        TextProto
+    BasedOnStyle: "Google"
+  - Language: TextProto
     Delimiters:
       - pb
       - PB
@@ -179,7 +179,7 @@ RawStringFormats:
       - ParseTestProto
       - ParsePartialTestProto
     CanonicalDelimiter: pb
-    BasedOnStyle:    google
+    BasedOnStyle: "Google"
 ReferenceAlignment: Left
 ReflowComments: Always
 RemoveBracesLLVM: false
@@ -209,8 +209,8 @@ SpaceBeforeParensOptions:
   AfterForeachMacros: true
   AfterFunctionDefinitionName: false
   AfterFunctionDeclarationName: false
-  AfterIfMacros:   true
-  AfterNot:        false
+  AfterIfMacros: true
+  AfterNot: false
   AfterOverloadedOperator: false
   AfterPlacementOperator: false
   AfterRequiresInClause: false

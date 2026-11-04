@@ -1,4 +1,4 @@
-// #include "../src/pican/sync/TripleBuffer.cppm"
+// #include "../src/bhlib/sync/TripleBuffer.cppm"
 //
 // #include <thread>
 //
@@ -7,7 +7,7 @@
 //
 // #define TEST_SUITE_NAME TripleBuffer
 //
-// namespace pican {
+// namespace bhlib {
 //
 // struct Data {
 //     std::uint64_t value;
@@ -62,4 +62,4 @@
 //     reader.join();
 // }
 //
-// }  // namespace pican
+// }  // namespace bhlib

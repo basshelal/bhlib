@@ -1,5 +1,5 @@
-#ifndef PICAN_TEST_HELPERMACROS
-#define PICAN_TEST_HELPERMACROS
+#ifndef BHLIB_TEST_HELPERMACROS
+#define BHLIB_TEST_HELPERMACROS
 
 #include <catch2/catch_all.hpp>
 
@@ -8,4 +8,4 @@
         variable &= true;                  \
     }
 
-#endif  // PICAN_TEST_HELPERMACROS
+#endif  // BHLIB_TEST_HELPERMACROS

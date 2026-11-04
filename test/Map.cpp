@@ -1,16 +1,16 @@
-// #include "../src/pican/ds/Map.cppm"
+// #include "../src/bhlib/ds/Map.cppm"
 //
 // #include <string_view>
 //
-// #include "../src/pican/fs/File.hpp"
-// #include "pican/mem/Block.cppm"
-// #include "pican/mem/Manager.cppm"
+// #include "../src/bhlib/fs/File.hpp"
+// #include "bhlib/mem/Block.cppm"
+// #include "bhlib/mem/Manager.cppm"
 // #include "test/TestUtils.hpp"
 // #include "test/Tracked.hpp"
 //
 // #define TEST_SUITE_NAME Map
 //
-// namespace pican {
+// namespace bhlib {
 //
 // using KeyType = std::string_view;
 // using ValueType = Tracked<std::string_view>;
@@ -55,4 +55,4 @@
 // }
 //
 //
-// }  // namespace pican
+// }  // namespace bhlib

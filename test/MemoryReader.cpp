@@ -1,10 +1,10 @@
-// #include "pican/info/MemoryReader.cppm"
+// #include "info/MemoryReader.cppm"
 //
 // #include "test/TestUtils.hpp"
 //
 // #define TEST_SUITE_NAME MemoryReader
 //
-// namespace pican::info {
+// namespace bhlib::info {
 // TEST(example) {
 //     Result<MemoryReader, MemoryReader::Error> memoryReaderResult = MemoryReader::create();
 //
@@ -14,4 +14,4 @@
 //
 //     auto free = memoryReader.update_info();
 // }
-// }  // namespace pican::info
+// }  // namespace bhlib::info

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace pican::test_utils {
+namespace bhlib::test_utils {
 
 template<typename T>
 inline void
@@ -10,4 +10,4 @@ do_not_optimize(const T& val) {
     asm volatile("" : : "r,m"(val) : "memory");
 }
 
-}  // namespace pican::test_utils
+}  // namespace bhlib::test_utils

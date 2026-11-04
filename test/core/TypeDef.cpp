@@ -2,9 +2,9 @@
 
 #include <catch2/catch_all.hpp>
 
-#include "pican/core/core.hpp"
+#include "bhlib/core/core.hpp"
 
-using pican::TypeDef;
+using bhlib::TypeDef;
 using ValueType = uint64_t;
 
 struct Tag {};

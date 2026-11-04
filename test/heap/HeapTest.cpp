@@ -2,10 +2,10 @@
 
 #include <catch2/catch_all.hpp>
 
+#include "bhlib/core/core.hpp"
+#include "bhlib/heap/Heap.hpp"
+#include "bhlib/stacktrace/Stacktrace.hpp"
 #include "test/utils/test_utils.hpp"
-#include "pican/core/core.hpp"
-#include "heap/Heap.hpp"
-#include "stacktrace/Stacktrace.hpp"
 
 struct Data {
     bool called = false;
@@ -30,7 +30,7 @@ TEST_CASE("Heap") {
         REQUIRE(heap::heap_is_sealed());
         const std::size_t allocations_count = heap::allocations_count();
         int* unused = new int;
-        pican::test_utils::do_not_optimize(unused);
+        bhlib::test_utils::do_not_optimize(unused);
         CHECK(data.called);
         CHECK(data.sizeBytes == sizeof(int));
         CHECK(heap::allocations_count() == allocations_count);
@@ -38,7 +38,7 @@ TEST_CASE("Heap") {
         heap::reset_violation_callback();
         data.called = false;
         unused = new int;
-        pican::test_utils::do_not_optimize(unused);
+        bhlib::test_utils::do_not_optimize(unused);
         CHECK(data.called == false);
         CHECK(heap::allocations_count() == (allocations_count + 1));
     }

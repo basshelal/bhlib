@@ -1,4 +1,4 @@
-set(TEST_EXECUTABLE "pican-test")
+set(TEST_EXECUTABLE "bhlib-test")
 
 file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
@@ -10,7 +10,7 @@ set_target_properties(${TEST_EXECUTABLE} PROPERTIES
 )
 
 target_link_libraries(${TEST_EXECUTABLE} PRIVATE
-        pican
+        bhlib
         Catch2::Catch2
 )
 
@@ -23,20 +23,7 @@ include(Catch)
 catch_discover_tests(${TEST_EXECUTABLE})
 
 # See src/CMakeLists.txt
-add_dependencies(${TEST_EXECUTABLE}
-        stacktrace_verify_interface_header_sets
-        contracts_verify_interface_header_sets
-        heap_verify_interface_header_sets
-        pican_verify_interface_header_sets
-)
+add_dependencies(${TEST_EXECUTABLE} bhlib_verify_interface_header_sets)
 
 # TODO remove the -Wno below
 target_compile_options(${TEST_EXECUTABLE} PRIVATE "-Wno-comment")
-
-target_link_options(${TEST_EXECUTABLE} PRIVATE
-        "LINKER:--wrap=malloc"
-        "LINKER:--wrap=free"
-        "LINKER:--wrap=calloc"
-        "LINKER:--wrap=realloc"
-        "LINKER:--wrap=aligned_alloc"
-)

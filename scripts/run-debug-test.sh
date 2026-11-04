@@ -4,6 +4,6 @@
 source "$(dirname "$(realpath "$0")")/bash-utils.sh"
 
 "$SCRIPTS_DIR"/build-debug-test.sh && \
-"$BUILD_DEBUG_DIR"/test/pican-test
+"$BUILD_DEBUG_DIR"/test/bhlib-test
 
 # TODO need a way to launch with memlock removed, use: prlimit --memlock=unlimited your_command

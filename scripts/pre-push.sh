@@ -23,12 +23,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-"$SCRIPTS_DIR"/build-debug-app.sh
-if [ $? -ne 0 ]; then
-    echo_error "Cannot push: build-debug-app failed"
-    exit 1
-fi
-
 "$SCRIPTS_DIR"/build-debug-test.sh
 if [ $? -ne 0 ]; then
     echo_error "Cannot push: build-debug-test failed"

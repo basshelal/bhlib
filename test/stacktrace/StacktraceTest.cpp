@@ -1,11 +1,10 @@
 #include <cstddef>
 
 #include <catch2/catch_all.hpp>
-
 #include <fmt/format.h>
 
-#include "stacktrace/Stacktrace.hpp"
-#include "heap/Heap.hpp"
+#include "bhlib/heap/Heap.hpp"
+#include "bhlib/stacktrace/Stacktrace.hpp"
 
 TEST_CASE("Stacktrace") {
     SECTION("Get stacktrace") {

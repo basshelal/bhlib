@@ -28,7 +28,7 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "PICAN_CONTRACTS_DISABLED": "ON"
+        "BHLIB_CONTRACTS_DISABLED": "ON"
       }
     },
     {
@@ -62,34 +62,18 @@
   ],
   "buildPresets": [
     {
-      "name": "debug-app",
-      "displayName": "debug app (no tests)",
-      "targets": [
-        "pican-app"
-      ],
-      "configurePreset": "debug-config"
-    },
-    {
       "name": "debug-test",
       "displayName": "debug tests",
       "targets": [
-        "pican-test"
+        "bhlib-test"
       ],
       "configurePreset": "debug-config"
-    },
-    {
-      "name": "relinfo-app",
-      "displayName": "relinfo app (no tests)",
-      "targets": [
-        "pican-app"
-      ],
-      "configurePreset": "relinfo-config"
     },
     {
       "name": "relinfo-test",
       "displayName": "relinfo tests",
       "targets": [
-        "pican-test"
+        "bhlib-test"
       ],
       "configurePreset": "relinfo-config"
     },
@@ -97,7 +81,7 @@
       "name": "debug-aarch64-test",
       "displayName": "debug aarch64 tests",
       "targets": [
-        "pican-test"
+        "bhlib-test"
       ],
       "configurePreset": "debug-aarch64-config"
     },
@@ -105,7 +89,7 @@
       "name": "relinfo-aarch64-test",
       "displayName": "relinfo aarch64 tests",
       "targets": [
-        "pican-test"
+        "bhlib-test"
       ],
       "configurePreset": "relinfo-aarch64-config"
     }

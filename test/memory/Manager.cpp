@@ -1,9 +1,9 @@
-// #include "pican/mem/Manager.cppm"
+// #include "bhlib/mem/Manager.cppm"
 //
 // #include "test/TestUtils.hpp"
 //
 // #define TEST_SUITE_NAME MemoryManager
 //
-// namespace pican::mem {
+// namespace bhlib::mem {
 //
-// }  // namespace pican::memory
+// }  // namespace bhlib::memory

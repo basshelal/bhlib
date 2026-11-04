@@ -1,13 +1,13 @@
 // #include <string_view>
 //
-// #include "../src/pican/ds/RingBuffer.cppm"
+// #include "../src/bhlib/ds/RingBuffer.cppm"
 // #include "test/Heap.hpp"
 // #include "test/TestUtils.hpp"
 // #include "test/Tracked.hpp"
 //
 // #define TEST_SUITE_NAME RingBuffer
 //
-// namespace pican {
+// namespace bhlib {
 //
 // using Element = Tracked<std::string_view>;
 // using RingBufferType = RingBuffer<Element>;
@@ -18,9 +18,9 @@
 //
 // TEST(create) {
 //     AUTO_HEAP_SEAL();
-//     const pican::Count capacity = 8;
+//     const bhlib::Count capacity = 8;
 //
-//     mem::Block block = pican::mem::Manager::get_block(sizeof(Element) * (capacity + 1));
+//     mem::Block block = bhlib::mem::Manager::get_block(sizeof(Element) * (capacity + 1));
 //     Array<Element> array = Array<Element>::initialize_by_copy(block, Element{});
 //
 //     const RingBufferOverflowBehavior overflowBehavior = RingBufferOverflowBehavior::DEFAULT;
@@ -37,9 +37,9 @@
 //
 // TEST(push_copy) {
 //     AUTO_HEAP_SEAL();
-//     const pican::Count capacity = 8;
+//     const bhlib::Count capacity = 8;
 //
-//     mem::Block block = pican::mem::Manager::get_block(sizeof(Element) * (capacity + 1));
+//     mem::Block block = bhlib::mem::Manager::get_block(sizeof(Element) * (capacity + 1));
 //     Array<Element> array = Array<Element>::initialize_by_copy(block, Element{});
 //
 //     const RingBufferOverflowBehavior overflowBehavior = RingBufferOverflowBehavior::DEFAULT;
@@ -214,4 +214,4 @@
 // //     }
 // //     ASSERT_TRUE(movedRingBuffer.is_empty());
 // // }
-// }  // namespace pican
+// }  // namespace bhlib

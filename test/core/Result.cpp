@@ -3,17 +3,17 @@
 
 #include <catch2/catch_all.hpp>
 
-#include "pican/core/core.hpp"
+#include "bhlib/core/core.hpp"
 #include "test/utils/test_utils.hpp"
 
-using pican::test_utils::LifetimeOperation;
-using pican::test_utils::Tracked;
+using bhlib::test_utils::LifetimeOperation;
+using bhlib::test_utils::Tracked;
 
 // TODO 26-Sep-26 12:22 The types should be different actually! Look into Catch typed tests to run the tests
 //  using some different types with different sizes (int, uint64_t, etc etc)
 using SuccessType = Tracked<std::string>;
 using FailureType = Tracked<std::string>;
-using Result = pican::Result<SuccessType, FailureType>;
+using Result = bhlib::Result<SuccessType, FailureType>;
 
 namespace {
 
@@ -79,7 +79,7 @@ check_matches(CreationMethod method, LifetimeOperation operation, bool isAssignm
             return true;
         }
     }
-    pican::panic("Unreachable");
+    bhlib::panic("Unreachable");
 }
 
 Result
@@ -114,7 +114,7 @@ create_result(CreationMethod method, bool isSuccess, const std::string& data) {
             return Result::failure_default();
         }
     }
-    pican::panic("Unreachable");
+    bhlib::panic("Unreachable");
 }
 }  // namespace
 

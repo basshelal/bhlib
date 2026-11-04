@@ -11,9 +11,7 @@ function remove_limit() {
 }
 
 # Debug
-remove_limit "$BUILD_DEBUG_DIR/src/pican-app"
-remove_limit "$BUILD_DEBUG_DIR/test/pican-test"
+remove_limit "$BUILD_DEBUG_DIR/test/bhlib-test"
 
 # Release
-remove_limit "$BUILD_RELEASE_DIR/src/pican-app"
-remove_limit "$BUILD_RELEASE_DIR/test/pican-test"
+remove_limit "$BUILD_RELEASE_DIR/test/bhlib-test"

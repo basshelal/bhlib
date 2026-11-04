@@ -1,4 +1,4 @@
-#include "pican/core/Function.hpp"
+#include "bhlib/core/Function.hpp"
 
 #include <cstddef>
 #include <string>
@@ -7,19 +7,19 @@
 
 #include <catch2/catch_all.hpp>
 
-#include "heap/Heap.hpp"
+#include "bhlib/heap/Heap.hpp"
 #include "test/utils/test_utils.hpp"
 
-using pican::test_utils::LifetimeOperation;
-using pican::test_utils::Tracked;
+using bhlib::test_utils::LifetimeOperation;
+using bhlib::test_utils::Tracked;
 
 using ValueType = Tracked<std::string>;
 
 // Enough for any function pointer (1 pointer), member function pointer (2 pointers on the Itanium ABI used by GCC and
 // Clang on Linux) and a lambda capturing a few ints, pointers or references
-constexpr pican::SizeBytes SMALL_CAPACITY = 4 * sizeof(void*);
+constexpr bhlib::SizeBytes SMALL_CAPACITY = 4 * sizeof(void*);
 
-using BinaryFunction = pican::Function<int(int, int), SMALL_CAPACITY>;
+using BinaryFunction = bhlib::Function<int(int, int), SMALL_CAPACITY>;
 
 namespace {
 
@@ -125,7 +125,7 @@ static_assert(!std::is_constructible_v<BinaryFunction, ReturnsString>);
 static_assert(!std::is_constructible_v<BinaryFunction, int>);
 
 // A void returning Function accepts any return type, the result is discarded, the same as std::function
-static_assert(std::is_constructible_v<pican::Function<void(int, int), SMALL_CAPACITY>, ReturnsString>);
+static_assert(std::is_constructible_v<bhlib::Function<void(int, int), SMALL_CAPACITY>, ReturnsString>);
 
 // Note that "too big for the capacity" can NOT be checked with a trait like the above. That's a static_assert inside
 // the constructor's body, which the traits never instantiate, they only look at the declaration (and its requires
@@ -170,11 +170,11 @@ TEST_CASE("Function") {
 
     SECTION("Member function pointer") {
         // The object is the first argument, std::invoke_r turns getter(counter) into (counter.*pointer)()
-        const pican::Function<int(const Counter&), SMALL_CAPACITY> getter{&Counter::get};
+        const bhlib::Function<int(const Counter&), SMALL_CAPACITY> getter{&Counter::get};
         const Counter counter{.value = 7};
         CHECK(getter(counter) == 7);
 
-        const pican::Function<void(Counter&, int), SMALL_CAPACITY> increaser{&Counter::increase};
+        const bhlib::Function<void(Counter&, int), SMALL_CAPACITY> increaser{&Counter::increase};
         Counter mutableCounter{.value = 1};
         increaser(mutableCounter, 2);
         CHECK(mutableCounter.value == 3);
@@ -201,7 +201,7 @@ TEST_CASE("Function") {
 
     SECTION("Lambda capturing by reference") {
         int total = 0;
-        const pican::Function<void(int), SMALL_CAPACITY> accumulate = [&total](int amount) {
+        const bhlib::Function<void(int), SMALL_CAPACITY> accumulate = [&total](int amount) {
             total += amount;
         };
         accumulate(2);
@@ -210,14 +210,14 @@ TEST_CASE("Function") {
     }
 
     SECTION("Mutable lambda keeps its state and copies are independent") {
-        pican::Function<int(), SMALL_CAPACITY> counter = [count = 0]() mutable {
+        bhlib::Function<int(), SMALL_CAPACITY> counter = [count = 0]() mutable {
             return ++count;
         };
         CHECK(counter() == 1);
         CHECK(counter() == 2);
 
         // The copy has its own copy of count, starting from where the original was when it was copied
-        const pican::Function<int(), SMALL_CAPACITY> copy{counter};
+        const bhlib::Function<int(), SMALL_CAPACITY> copy{counter};
         // Calling a mutable lambda through a const Function works, the same as std::function, see Function.hpp
         CHECK(copy() == 3);
         CHECK(copy() == 4);
@@ -232,14 +232,14 @@ TEST_CASE("Function") {
 
     SECTION("Return type conversion") {
         // The callable returns short, the Function returns long, std::invoke_r converts
-        const pican::Function<long(int), SMALL_CAPACITY> widen = [](int a) -> short {
+        const bhlib::Function<long(int), SMALL_CAPACITY> widen = [](int a) -> short {
             return static_cast<short>(a);
         };
         CHECK(widen(42) == 42L);
 
         // The callable returns int, the Function returns void, the result is discarded
         int calls = 0;
-        const pican::Function<void(), SMALL_CAPACITY> discard = [&calls]() {
+        const bhlib::Function<void(), SMALL_CAPACITY> discard = [&calls]() {
             calls++;
             return 42;
         };
@@ -249,7 +249,7 @@ TEST_CASE("Function") {
 
     SECTION("Reference arguments") {
         // Args_TP = int&, so the reference is passed all the way through to the lambda and it modifies our variable
-        const pican::Function<void(int&), SMALL_CAPACITY> doubler = [](int& value) {
+        const bhlib::Function<void(int&), SMALL_CAPACITY> doubler = [](int& value) {
             value *= 2;
         };
         int value = 4;
@@ -262,7 +262,7 @@ TEST_CASE("Function") {
         const ValueType::LifetimeCallbacks callbacks{.onCopyConstructed = [&copies](const ValueType&) {
             copies++;
         }};
-        const pican::Function<LifetimeOperation(ValueType), SMALL_CAPACITY> lastOperationOf = [](ValueType v) {
+        const bhlib::Function<LifetimeOperation(ValueType), SMALL_CAPACITY> lastOperationOf = [](ValueType v) {
             return v.lastOperation;
         };
 
@@ -359,7 +359,7 @@ TEST_CASE("Function lifetimes are balanced") {
     };
 
     // The lambda is exactly as big as its one capture on every mainstream compiler, the extra is just headroom
-    using TrackedFunction = pican::Function<std::size_t(), sizeof(ValueType) + SMALL_CAPACITY>;
+    using TrackedFunction = bhlib::Function<std::size_t(), sizeof(ValueType) + SMALL_CAPACITY>;
 
     // Creates a TrackedFunction holding a lambda that captures a Tracked. Inside: the init capture constructs the
     // Tracked directly in the lambda (1 alive), the lambda temporary is moved into the Function's buffer (2 alive),
@@ -470,11 +470,11 @@ TEST_CASE("Function never allocates") {
         functionPointerResult = trivialMoved(1, 1);
 
         // Not trivially copyable lambda, the manage_f path
-        pican::Function<int(), SMALL_CAPACITY> nonTrivial = [capture = NotTriviallyCopyable{7}]() {
+        bhlib::Function<int(), SMALL_CAPACITY> nonTrivial = [capture = NotTriviallyCopyable{7}]() {
             return capture.value;
         };
-        const pican::Function<int(), SMALL_CAPACITY> nonTrivialCopy{nonTrivial};
-        const pican::Function<int(), SMALL_CAPACITY> nonTrivialMoved{std::move(nonTrivial)};
+        const bhlib::Function<int(), SMALL_CAPACITY> nonTrivialCopy{nonTrivial};
+        const bhlib::Function<int(), SMALL_CAPACITY> nonTrivialMoved{std::move(nonTrivial)};
         nonTrivial = nonTrivialCopy;
         nonTrivialResult = nonTrivial();
         nonTrivialCopyResult = nonTrivialCopy();

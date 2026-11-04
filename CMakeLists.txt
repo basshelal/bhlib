@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30)
-project(PiCAN
+project(bhlib
         VERSION 0.1.0
         LANGUAGES CXX C
 )
@@ -9,21 +9,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_program(MOLD_PROGRAM NAMES mold)
-if (MOLD_PROGRAM)
-    set(MOLD_DEFAULT_STATUS ON)
-else ()
-    set(MOLD_DEFAULT_STATUS OFF)
-    message(WARNING "mold linker not found, defaulting USE_MOLD_LINKER to OFF.")
-endif ()
+# The linker is the choice of whoever builds the final binary, so only choose one if that is us
+if (PROJECT_IS_TOP_LEVEL)
+    find_program(MOLD_PROGRAM NAMES mold)
+    if (MOLD_PROGRAM)
+        set(MOLD_DEFAULT_STATUS ON)
+    else ()
+        set(MOLD_DEFAULT_STATUS OFF)
+        message(WARNING "mold linker not found, defaulting USE_MOLD_LINKER to OFF.")
+    endif ()
 
-option(USE_MOLD_LINKER "Use mold linker (if available)" ${MOLD_DEFAULT_STATUS})
+    option(USE_MOLD_LINKER "Use mold linker (if available)" ${MOLD_DEFAULT_STATUS})
 
-if (USE_MOLD_LINKER)
-    add_link_options(-fuse-ld=mold)
-    message("Using mold linker")
-else ()
-    message("Not using mold linker")
+    if (USE_MOLD_LINKER)
+        add_link_options(-fuse-ld=mold)
+        message("Using mold linker")
+    else ()
+        message("Not using mold linker")
+    endif ()
 endif ()
 
 # TODO review which flags from the below we will need!
@@ -49,13 +52,15 @@ endif ()
 #-ffunction-sections -fdata-sections
 
 add_compile_options(-fno-exceptions -fno-rtti)
-add_compile_options(-Wall -Werror -pedantic -Wno-interference-size -Wno-attributes=pican::)
+
+# A new compiler warning in us should fail our own builds, not the builds of whoever depends on us
+if (PROJECT_IS_TOP_LEVEL)
+    add_compile_options(-Wall -Werror -pedantic -Wno-attributes=bhlib::)
+endif ()
 
 # CPM for package/dependency management, see: https://github.com/cpm-cmake/CPM.cmake
 include(cmake/CPM.cmake)
 
-# Forced OFF so that build directories configured back when we used C++ modules drop their cached ON value
-set(FMT_MODULE OFF CACHE BOOL "Build the fmt module" FORCE)
 # fmt: String formatting
 CPMAddPackage(
         NAME fmt
@@ -71,11 +76,13 @@ CPMAddPackage(
 )
 
 # Catch2: Unit testing
-CPMAddPackage(
-        NAME Catch2
-        GITHUB_REPOSITORY catchorg/Catch2
-        VERSION 3.15.3
-)
+if (PROJECT_IS_TOP_LEVEL)
+    CPMAddPackage(
+            NAME Catch2
+            GITHUB_REPOSITORY catchorg/Catch2
+            VERSION 3.15.3
+    )
+endif ()
 
 # libbacktrace to be built and installed manually
 CPMAddPackage(
@@ -146,25 +153,29 @@ endif ()
 
 add_subdirectory(src)
 
-enable_testing()
-add_subdirectory(test)
+# Everything below is for developing bhlib itself. When we are someone's dependency CMAKE_SOURCE_DIR is their project,
+# so none of this can run, the git hooks in particular would reconfigure their repository
+if (PROJECT_IS_TOP_LEVEL)
+    enable_testing()
+    add_subdirectory(test)
 
-include(cmake/script-targets.cmake)
+    include(cmake/script-targets.cmake)
 
-# Make git use .githooks/ as its git hooks directory, this way,
-# our hooks are tracked in git and can run out of the box after a git clone
-# TODO don't keep setting it, just check it then set if not valid, then check again to verify
-find_package(Git)
-if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-    execute_process(
-            COMMAND ${GIT_EXECUTABLE} config core.hooksPath .githooks
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            RESULT_VARIABLE GIT_CONFIG_RESULT
-    )
+    # Make git use .githooks/ as its git hooks directory, this way,
+    # our hooks are tracked in git and can run out of the box after a git clone
+    # TODO don't keep setting it, just check it then set if not valid, then check again to verify
+    find_package(Git)
+    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+        execute_process(
+                COMMAND ${GIT_EXECUTABLE} config core.hooksPath .githooks
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                RESULT_VARIABLE GIT_CONFIG_RESULT
+        )
 
-    if (GIT_CONFIG_RESULT EQUAL 0)
-        message(STATUS "Git Hooks successfully configured to use '.githooks/'")
-    else ()
-        message(WARNING "Failed to configure Git Hooks.")
+        if (GIT_CONFIG_RESULT EQUAL 0)
+            message(STATUS "Git Hooks successfully configured to use '.githooks/'")
+        else ()
+            message(WARNING "Failed to configure Git Hooks.")
+        endif ()
     endif ()
 endif ()

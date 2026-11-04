@@ -3,11 +3,12 @@
 #include <atomic>
 #include <memory>
 #include <sstream>
+
 #include <magic_enum/magic_enum.hpp>
 
 #include "test/HelperMacros.hpp"
 
-namespace pican::test_utils {
+namespace bhlib::test_utils {
 enum class LifetimeOperation : uint8_t {
     NONE,
     CONSTRUCTOR,
@@ -130,4 +131,4 @@ public:  // friends
         return stream << to_string(tracked);
     }
 };
-}  // namespace pican::test_utils
+}  // namespace bhlib::test_utils

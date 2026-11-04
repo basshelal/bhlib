@@ -1,10 +1,10 @@
-// #include "../src/pican/fs/FileBuffer.hpp"
+// #include "../src/bhlib/fs/FileBuffer.hpp"
 //
 // #include "test/TestUtils.hpp"
 //
 // #define TEST_SUITE_NAME FileBuffer
 //
-// namespace pican {
+// namespace bhlib {
 //
 // TEST(create) {
 //     char array[256];
@@ -177,4 +177,4 @@
 //     ASSERT_EQUAL(wrote, buffer.write_index());
 // }
 //
-// }  // namespace pican
+// }  // namespace bhlib

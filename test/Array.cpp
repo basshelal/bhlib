@@ -1,13 +1,13 @@
 // #include <string_view>
 //
-// #include "../src/pican/ds/RingBuffer.cppm"
+// #include "../src/bhlib/ds/RingBuffer.cppm"
 // #include "test/Heap.hpp"
 // #include "test/TestUtils.hpp"
 // #include "test/Tracked.hpp"
 //
 // #define TEST_SUITE_NAME Array
 //
-// namespace pican {
+// namespace bhlib {
 //
 // using Element = Tracked<std::string_view>;
 // constexpr SizeBytes ELEMENT_SIZE = sizeof(Element);
@@ -159,4 +159,4 @@
 //     }
 // }
 //
-// }  // namespace pican
+// }  // namespace bhlib

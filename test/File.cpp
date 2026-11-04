@@ -1,11 +1,11 @@
-// #include "../src/pican/fs/File.hpp"
+// #include "../src/bhlib/fs/File.hpp"
 //
-// #include "pican/mem/Manager.cppm"
+// #include "bhlib/mem/Manager.cppm"
 // #include "test/TestUtils.hpp"
 //
 // #define TEST_SUITE_NAME File
 //
-// namespace pican {
+// namespace bhlib {
 //
 // constexpr FilePath TEST_FILE_PATH = "./test-file.txt";
 //
@@ -482,7 +482,7 @@
 // }
 //
 // TEST(file_type_fifo_pipe) {
-//     const FilePath path{"/tmp/pican-test-fifo"};
+//     const FilePath path{"/tmp/bhlib-test-fifo"};
 //     ::mkfifo(path.data(), 0666);
 //     ASSERT_TRUE(File::exists(path));
 //
@@ -585,4 +585,4 @@
 //     ASSERT_TRUE(fileToRead.remove().is_success());
 // }
 //
-// }  // namespace pican
+// }  // namespace bhlib

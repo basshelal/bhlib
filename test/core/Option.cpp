@@ -3,14 +3,14 @@
 
 #include <catch2/catch_all.hpp>
 
-#include "pican/core/core.hpp"
+#include "bhlib/core/core.hpp"
 #include "test/utils/test_utils.hpp"
 
-using pican::test_utils::LifetimeOperation;
-using pican::test_utils::Tracked;
+using bhlib::test_utils::LifetimeOperation;
+using bhlib::test_utils::Tracked;
 
 using ValueType = Tracked<std::string>;
-using Option = pican::Option<ValueType>;
+using Option = bhlib::Option<ValueType>;
 
 namespace {
 
@@ -89,7 +89,7 @@ check_matches(CreationMethod method, LifetimeOperation operation, bool isAssignm
             return false;
         }
     }
-    pican::panic("Unreachable");
+    bhlib::panic("Unreachable");
 }
 
 Option
@@ -113,7 +113,7 @@ create_option(CreationMethod method, const std::string& data) {
             return Option::none();
         }
     }
-    pican::panic("Unreachable");
+    bhlib::panic("Unreachable");
 }
 
 }  // namespace
@@ -166,13 +166,13 @@ static_assert(std::is_copy_assignable_v<Option>);
 static_assert(std::is_nothrow_move_constructible_v<Option>);
 static_assert(std::is_nothrow_move_assignable_v<Option>);
 
-using MoveOnlyOption = pican::Option<MoveOnly>;
+using MoveOnlyOption = bhlib::Option<MoveOnly>;
 static_assert(!std::is_copy_constructible_v<MoveOnlyOption>);
 static_assert(!std::is_copy_assignable_v<MoveOnlyOption>);
 static_assert(std::is_nothrow_move_constructible_v<MoveOnlyOption>);
 static_assert(std::is_nothrow_move_assignable_v<MoveOnlyOption>);
 
-using PotentiallyThrowingMoveOption = pican::Option<PotentiallyThrowingMove>;
+using PotentiallyThrowingMoveOption = bhlib::Option<PotentiallyThrowingMove>;
 static_assert(std::is_move_constructible_v<PotentiallyThrowingMoveOption>);
 static_assert(std::is_move_assignable_v<PotentiallyThrowingMoveOption>);
 static_assert(!std::is_nothrow_move_constructible_v<PotentiallyThrowingMoveOption>);
@@ -488,7 +488,7 @@ TEST_CASE("Option lifetimes are balanced") {
 // none() must never construct a value, so it has to work for a value type that can't be default constructed. This is
 // a runtime test rather than a static_assert because only calling none() for real instantiates its body
 TEST_CASE("Option of a type that isn't default constructible") {
-    using NotDefaultConstructibleOption = pican::Option<NotDefaultConstructible>;
+    using NotDefaultConstructibleOption = bhlib::Option<NotDefaultConstructible>;
 
     const NotDefaultConstructibleOption none = NotDefaultConstructibleOption::none();
     CHECK(none.is_empty());
