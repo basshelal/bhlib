@@ -82,7 +82,7 @@ public:  // member functions
     put_copy(const Key_TP& key, const Value_TP& value) & {
         Index index = this->hashed_index(key);
         Element* element = this->elements_f.get_ptr(index);
-        contracts::assertion(element != nullptr);
+        BHLIB_ASSERTION(element != nullptr);
 
         // empty slot
         if (element->status == ElementStatus::EMPTY) {
@@ -92,7 +92,7 @@ public:  // member functions
             return;
         }
 
-        contracts::assertion(element->status == ElementStatus::OCCUPIED);
+        BHLIB_ASSERTION(element->status == ElementStatus::OCCUPIED);
         // already exists but key is same, update
         if (element->key == key) {
             element->value = value;
@@ -107,7 +107,7 @@ public:  // member functions
     get(const Key_TP& key) const& {
         Index index = this->hashed_index(key);
         Element* element = this->elements_f.get_ptr(index);
-        contracts::assertion(element != nullptr);
+        BHLIB_ASSERTION(element != nullptr);
         if (element->status == ElementStatus::EMPTY) {
             return std::optional<Value_TP>{};
         }
@@ -119,7 +119,7 @@ public:  // member functions
     has_value(const Key_TP& key) const& {
         Index index = this->hashed_index(key);
         Element* element = this->elements_f.get_ptr(index);
-        contracts::assertion(element != nullptr);
+        BHLIB_ASSERTION(element != nullptr);
         return element->status != ElementStatus::EMPTY;
     }
 
@@ -129,7 +129,7 @@ private:  // member functions
     hashed_index(const Key_TP& key) const& {
         Index hash = bhlib::hash(key);
         Index index = hash % this->capacity();
-        contracts::assertion(index >= 0 && index < this->capacity());
+        BHLIB_ASSERTION(index >= 0 && index < this->capacity());
         return index;
     }
 };

@@ -4,7 +4,6 @@
 * Heap
 * Stacktrace
 * Contracts
-* TypeDef
 * Function
 * Result
 * Option

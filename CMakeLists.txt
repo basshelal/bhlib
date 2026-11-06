@@ -51,11 +51,9 @@ endif ()
 #-fstack-usage -Wstack-usage=2048 -Wframe-larger-than=1024
 #-ffunction-sections -fdata-sections
 
-add_compile_options(-fno-exceptions -fno-rtti)
-
 # A new compiler warning in us should fail our own builds, not the builds of whoever depends on us
 if (PROJECT_IS_TOP_LEVEL)
-    add_compile_options(-Wall -Werror -pedantic -Wno-attributes=bhlib::)
+    add_compile_options(-Wall -Werror -pedantic -Wno-attributes=bhlib:: -fno-exceptions -fno-rtti)
 endif ()
 
 # CPM for package/dependency management, see: https://github.com/cpm-cmake/CPM.cmake

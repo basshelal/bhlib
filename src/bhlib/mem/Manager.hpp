@@ -73,7 +73,7 @@ public:  // static functions
             }
         }
 
-        contracts::assertion(toAllocate > sizeof(Manager));
+        BHLIB_ASSERTION(toAllocate > sizeof(Manager));
 
         This::instance_sf =
             new (static_cast<Manager*>(memory)) Manager{mem::ptr_to_address(memory), toAllocate, sizeof(Manager)};
@@ -101,7 +101,7 @@ public:  // member functions
         }
 
         const Address address = headAddress + paddingRequired;
-        contracts::assertion(bhlib::mem::address_is_aligned(address, alignment));
+        BHLIB_ASSERTION(bhlib::mem::address_is_aligned(address, alignment));
         instance.headOffset_f = newHeadOffset;
 
         return Block{address, size};

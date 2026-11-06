@@ -131,9 +131,8 @@ public:  // copy-control
     operator=(const Option& rhs) &
         requires(std::is_copy_constructible_v<ValueType> && std::is_copy_assignable_v<ValueType>)
     {
-        [[maybe_unused]]
-        auto unused = contracts::postcondition([this, &rhs]() -> void {
-            contracts::assertion(this->hasValue_f == rhs.hasValue_f);
+        BHLIB_POSTCONDITION([this, &rhs]() -> void {
+            BHLIB_ASSERTION(this->hasValue_f == rhs.hasValue_f);
         });
         // Self assignment, without this check some <- some would still be fine but it's cheaper to do nothing
         if (this == std::addressof(rhs)) {
@@ -162,9 +161,8 @@ public:  // copy-control
     ) & noexcept(std::is_nothrow_move_constructible_v<ValueType> && std::is_nothrow_move_assignable_v<ValueType>)
         requires(std::is_move_constructible_v<ValueType> && std::is_move_assignable_v<ValueType>)
     {
-        [[maybe_unused]]
-        auto unused = contracts::postcondition([this, &rhs]() -> void {
-            contracts::assertion(this->hasValue_f == rhs.hasValue_f);
+        BHLIB_POSTCONDITION([this, &rhs]() -> void {
+            BHLIB_ASSERTION(this->hasValue_f == rhs.hasValue_f);
         });
         if (this == std::addressof(rhs)) {
             return *this;

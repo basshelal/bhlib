@@ -25,7 +25,7 @@ private:  // constructors
 public:  // static factories
     static Array<TP>
     initialize_by_copy(const mem::Block& block, const TP& initialValue) {
-        contracts::precondition(block.size_bytes() >= TP_SIZE);  // needs at least 1 element
+        BHLIB_PRECONDITION(block.size_bytes() >= TP_SIZE);  // needs at least 1 element
         Array<TP> array{block};
         std::uninitialized_fill_n(array.block_f.address_to_ptr<TP>(), array.length_f, initialValue);
         return array;
@@ -34,7 +34,7 @@ public:  // static factories
     template<typename... Args_TP>
     static Array<TP>
     initialize_emplace(const mem::Block& block, Args_TP&&... args) {
-        contracts::precondition(block.size_bytes() >= TP_SIZE);  // needs at least 1 element
+        BHLIB_PRECONDITION(block.size_bytes() >= TP_SIZE);  // needs at least 1 element
         Array<TP> array{block};
         for (BasicIterator<TP> iter = array.begin(); iter != array.end(); ++iter) {
             TP* ptr = iter.get();
@@ -62,7 +62,7 @@ public:  // member functions
     [[nodiscard]]
     TP*
     get_ptr(Index index) const& {
-        contracts::precondition(index < this->length_f);
+        BHLIB_PRECONDITION(index < this->length_f);
         return this->block_f.ptr_at_offset<TP>(index * TP_SIZE);
     }
 

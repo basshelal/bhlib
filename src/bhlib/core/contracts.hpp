@@ -10,7 +10,7 @@
 
 #include "bhlib/stacktrace/Stacktrace.hpp"
 
-namespace contracts {
+namespace bhlib {
 enum class ContractsLevel : std::uint8_t {
     NONE = 0,
     ALL = 1,
@@ -183,24 +183,25 @@ loop_invariant(Callable func) {
     return LoopInvariantChecker<Callable>(std::move(func));
 }
 
-}  // namespace contracts
+}  // namespace bhlib
 
 // Convenience Macros for bhlib::dbc contracts
 // Note: You must `#include "bhlib/core/contracts.hpp"` in any source file that uses these macros.
 
-#define BHLIB_DBC_CONCAT_IMPL(x, y) x##y
-#define BHLIB_DBC_CONCAT(x, y) BHLIB_DBC_CONCAT_IMPL(x, y)
+#define BHLIB_CONTRACTS_CONCAT_IMPL(x, y) x##y
+#define BHLIB_CONTRACTS_CONCAT(x, y) BHLIB_CONTRACTS_CONCAT_IMPL(x, y)
 
-#define PRECONDITION(cond, ...) contracts::precondition(cond, ##__VA_ARGS__)
-#define POSTCONDITION(...)                                                            \
-    contracts::PostconditionChecker BHLIB_DBC_CONCAT(_bhlib_post_, __LINE__) { \
-        __VA_ARGS__                                                                   \
+#define BHLIB_ASSERTION(cond, ...) bhlib::assertion(cond, ##__VA_ARGS__)
+#define BHLIB_PRECONDITION(cond, ...) bhlib::precondition(cond, ##__VA_ARGS__)
+#define BHLIB_POSTCONDITION(...)                                                 \
+    bhlib::PostconditionChecker BHLIB_CONTRACTS_CONCAT(_bhlib_post_, __LINE__) { \
+        __VA_ARGS__                                                              \
     }
-#define CHECK_CLASS_INVARIANTS(obj)                                                     \
-    contracts::InvariantChecker BHLIB_DBC_CONCAT(_bhlib_class_inv_, __LINE__) { \
-        obj                                                                            \
+#define BHLIB_CHECK_CLASS_INVARIANTS(obj)                                         \
+    bhlib::InvariantChecker BHLIB_CONTRACTS_CONCAT(_bhlib_class_inv_, __LINE__) { \
+        obj                                                                       \
     }
-#define LOOP_INVARIANT(...)                                                               \
-    contracts::LoopInvariantChecker BHLIB_DBC_CONCAT(_bhlib_loop_inv_, __LINE__) { \
-        __VA_ARGS__                                                                       \
+#define BHLIB_LOOP_INVARIANT(...)                                                    \
+    bhlib::LoopInvariantChecker BHLIB_CONTRACTS_CONCAT(_bhlib_loop_inv_, __LINE__) { \
+        __VA_ARGS__                                                                  \
     }

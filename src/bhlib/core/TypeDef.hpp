@@ -10,19 +10,22 @@ class TypeDef {
 private:
     TP value_f;
 
+public:  // types
+    using ValueType = TP;
+
 public:  // constructors
     TypeDef() = default;
 
     explicit constexpr TypeDef(const TP& value) : value_f{value} {
-        contracts::assertion(sizeof(TypeDef) == sizeof(TP));
-        contracts::assertion(
+        BHLIB_PRECONDITION(sizeof(TypeDef) == sizeof(TP));
+        BHLIB_PRECONDITION(
             reinterpret_cast<void*>(std::addressof(*this)) == reinterpret_cast<void*>(std::addressof(this->value_f))
         );
     }
 
     explicit constexpr TypeDef(TP&& value) : value_f{std::move(value)} {
-        contracts::assertion(sizeof(TypeDef) == sizeof(TP));
-        contracts::assertion(
+        BHLIB_PRECONDITION(sizeof(TypeDef) == sizeof(TP));
+        BHLIB_PRECONDITION(
             reinterpret_cast<void*>(std::addressof(*this)) == reinterpret_cast<void*>(std::addressof(this->value_f))
         );
     }

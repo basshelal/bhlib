@@ -6,16 +6,29 @@
 
 #include "bhlib/core/TypeDef.hpp"
 
+#define DEFINE_TYPE_DEF(Name, Type) \
+    struct Name##Tag {};            \
+    using Name = bhlib::TypeDef<Type, Name##Tag>
+
 namespace bhlib {
-// TODO @basshelal Fri 24-Jul-2026 : Convert (most? of) these to be "strong typedefs" aka, nice useful value classes
-struct NewAddressTag{};
-using NewAddress = TypeDef<uintptr_t,NewAddressTag>;
 using Address = uintptr_t;
 using SizeBytes = std::size_t;
 using Alignment = std::size_t;
 using Offset = std::size_t;
 using Count = std::size_t;
 using Index = std::size_t;
+
+// DEFINE_TYPE_DEF(Address, std::uintptr_t);
+
+// DEFINE_TYPE_DEF(SizeBytes, std::size_t);
+
+// DEFINE_TYPE_DEF(Alignment, std::size_t);
+
+// DEFINE_TYPE_DEF(Offset, std::size_t);
+
+// DEFINE_TYPE_DEF(Count, std::size_t);
+
+// DEFINE_TYPE_DEF(Index, std::size_t);
 
 using FileDescriptor = int;
 using Milliseconds = std::uint64_t;

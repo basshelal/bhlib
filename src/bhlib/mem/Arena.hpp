@@ -71,8 +71,8 @@ public:  // member functions
         if (ptr == bhlib::mem::ptr_to_address(nullptr)) {
             return nullptr;
         }
-        contracts::assertion(block.size_bytes() >= size);
-        contracts::assertion(bhlib::mem::address_is_aligned(ptr, alignment));
+        BHLIB_ASSERTION(block.size_bytes() >= size);
+        BHLIB_ASSERTION(bhlib::mem::address_is_aligned(ptr, alignment));
 
         return ptr;
     }
